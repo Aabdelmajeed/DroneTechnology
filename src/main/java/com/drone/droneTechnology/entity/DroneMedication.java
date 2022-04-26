@@ -1,6 +1,5 @@
 package com.drone.droneTechnology.entity;
 
-import com.drone.droneTechnology.enums.DroneState;
 import com.drone.droneTechnology.enums.MedicationState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +18,7 @@ public class DroneMedication implements Serializable {
     @EmbeddedId
     private DroneMedicationID droneMedicationID;
 
-    @Column(name = "MedicationState")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private MedicationState status;
 

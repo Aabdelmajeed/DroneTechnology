@@ -1,13 +1,12 @@
 package com.drone.droneTechnology.entity;
 
+import com.drone.droneTechnology.enums.DroneState;
+import com.drone.droneTechnology.enums.MedicationState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @AllArgsConstructor
@@ -20,8 +19,9 @@ public class DroneMedication implements Serializable {
     @EmbeddedId
     private DroneMedicationID droneMedicationID;
 
-    @Column(name = "status")
-    private Boolean status;
+    @Column(name = "MedicationState")
+    @Enumerated(EnumType.STRING)
+    private MedicationState status;
 
     @Column(name = "operationTime")
     private String operationTime;

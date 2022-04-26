@@ -8,14 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
 @Table(name = "Drone")
-public class Drone {
+public class Drone implements Serializable {
 
     @Id
     @Column(name = "ID")
@@ -25,6 +26,7 @@ public class Drone {
     private String serialNumber;
 
     @Column(name = "MODEL")
+    @Enumerated(EnumType.STRING)
     private DroneModel model;
 
     @Column(name = "WEIGHT_LIMIT")
@@ -34,8 +36,9 @@ public class Drone {
     private String batteryCapacity;
 
     @Column(name = "STATE")
+    @Enumerated(EnumType.STRING)
     private DroneState state;
 
-    @OneToMany(mappedBy = "drone" , fetch = FetchType.EAGER , cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<Medication> medicationList;
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "droneMedicationID.drone")
+    private Set<DroneMedication> droneMedications;
 }

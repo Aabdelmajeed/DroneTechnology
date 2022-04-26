@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Blob;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
 @Table(name = "Medication")
-public class Medication {
+public class Medication implements Serializable {
 
     @Id
     @Column(name = "ID")
@@ -24,11 +26,12 @@ public class Medication {
     @Column(name = "CODE")
     private String code;
 
+    @Column(name = "WEIGHT")
+    private String weight;
+
     @Column(name = "IMAGE")
     private Blob image;
 
-    @ManyToOne
-    @JoinColumn(name = "DRONE_ID")
-    private Drone drone;
-
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "droneMedicationID.medication")
+    private Set<DroneMedication> droneMedications;
 }

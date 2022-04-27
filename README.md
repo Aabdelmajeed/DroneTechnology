@@ -8,7 +8,7 @@ field of transportation: **the drone**. Just as the mobile phone allowed develop
 has the potential to leapfrog traditional transportation infrastructure.
 
 
-### **What's used in project**
+### - **What's used in project**
 ---
 
 | what's used   |    advantage    | 
@@ -20,7 +20,7 @@ has the potential to leapfrog traditional transportation infrastructure.
 | modelmapper | mapping object to other |   
 
 
-### **Database Tables and RelationShip between them**
+### - **Database Tables and RelationShip between them**
 ---
     - Relationship: one To Many
     
@@ -31,3 +31,35 @@ has the potential to leapfrog traditional transportation infrastructure.
  
    > each Drone can Hold more than one medication based on his weight ability.
 
+### - **API EndPoints**  `you can import postman collection in postman Folder and try it yourself`
+---
+     
+  - `POST` **/drone/register**
+      - used to register a new Drone
+      - Body Request Example
+     
+          **{\
+                "serialNumber":"11111",\
+                "weightLimit":"50",\
+                "droneModel": "MIDDLEWEIGHT",\
+                "batteryCapacity": 25.5,\
+                "droneState":"IDLE"\
+          }**
+   
+     
+  - `GET` **/drone/available**
+      - Get All Available Drones To load Medications
+      - it will get All Drones that are in either `Idle` or `Loading` state but their `battery` greater than 25%
+   
+  - `GET` **/drone/{{droneSerialNumber}}/getLoadedMedicationItem**
+      - api used to get all medication Item that's loaded by Drone with given drone serial number.      
+   
+  - `GET` **/drone/{{droneSerialNumber}}/batteryLevel**
+      - api used to get the battery level for given drone's serial number.
+   
+     
+  - `POST` **/drone/{{droneSerialNumber}}/loadMedications**
+      - api used to load medication to given drone's serial number.
+      - in order to load a medication drone must be available (IDLE / Loading) state and has the ability to load these weight of medications.
+     
+     

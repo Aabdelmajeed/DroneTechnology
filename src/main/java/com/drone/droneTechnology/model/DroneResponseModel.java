@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DroneResponseModel {
 
-    @JsonProperty("description")
-    private String description = null;
+    @JsonProperty("value")
+    private String value = null;
 
 }

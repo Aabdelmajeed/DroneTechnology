@@ -43,4 +43,16 @@ public class DroneExceptionHandler {
 
         return new ResponseEntity<List<ErrorRepresentation>>(customFieldErrors, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorRepresentation> handleGenericException(Exception ex) {
+        ErrorRepresentation errorRepresentation = ErrorRepresentation.builder()
+                .reason(ex.getMessage()).build();
+
+        return new ResponseEntity<ErrorRepresentation>(errorRepresentation, HttpStatus.NOT_ACCEPTABLE);
+    }
+
 }

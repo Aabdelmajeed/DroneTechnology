@@ -1,25 +1,26 @@
 package com.drone.droneTechnology.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
+@Builder
 @Table(name = "Medication")
 public class Medication implements Serializable {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "NAME")
     private String name;
@@ -33,6 +34,7 @@ public class Medication implements Serializable {
     @Column(name = "IMAGE")
     private Blob image;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "droneMedicationID.medication")
-    private Set<DroneMedication> droneMedications;
+    @ManyToOne
+    @JoinColumn(name = "Drone_id")
+    private Drone drone;
 }

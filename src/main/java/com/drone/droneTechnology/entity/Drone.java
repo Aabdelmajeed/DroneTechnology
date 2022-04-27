@@ -3,6 +3,7 @@ package com.drone.droneTechnology.entity;
 
 import com.drone.droneTechnology.enums.DroneModel;
 import com.drone.droneTechnology.enums.DroneState;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,20 +11,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Data
 @Entity
 @Builder
-@Data
 @Table(name = "Drone")
 public class Drone implements Serializable {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "SERIALNO", unique = true)
     private String serialNumber;
@@ -42,6 +44,6 @@ public class Drone implements Serializable {
     @Enumerated(EnumType.STRING)
     private DroneState state;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "droneMedicationID.drone")
-    private Set<DroneMedication> droneMedications;
+    @OneToMany(mappedBy = "drone", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Medication> medications;
 }

@@ -6,10 +6,9 @@ import com.drone.droneTechnology.dto.MedicationDTO;
 import com.drone.droneTechnology.model.DroneResponseModel;
 import com.drone.droneTechnology.model.ValidList;
 import com.drone.droneTechnology.services.IDroneService;
-import org.modelmapper.ModelMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class DroneAppController {
 
     @Autowired
     @Qualifier("inMemoryDBDroneService")
     IDroneService droneService;
 
-
     @PostMapping(value = "/drone/register",
             produces = {"application/json"},
             consumes = {"application/json"})
     public ResponseEntity<DroneResponseModel> registerDrone(@RequestBody @Valid DroneDTO droneDTO) {
+
         droneService.registerDrone(droneDTO);
         DroneResponseModel droneResponseModel = DroneResponseModel.builder()
                 .value("Drone Registered Successfly")
@@ -53,6 +53,7 @@ public class DroneAppController {
             consumes = {"application/json"})
     public ResponseEntity<List<DroneDTO>> getAvalibleDrones() throws Exception {
         List<DroneDTO> availableDrones = droneService.getAvailableDrones();
+
         return new ResponseEntity<List<DroneDTO>>(availableDrones, HttpStatus.OK);
     }
 

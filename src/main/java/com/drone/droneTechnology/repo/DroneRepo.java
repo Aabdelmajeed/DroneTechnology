@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface DroneRepo extends CrudRepository<Drone, Serializable> {
     Drone findBySerialNumber(String serialNumber);
-
     List<Drone> findByState(DroneState state);
 }

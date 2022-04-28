@@ -2,7 +2,6 @@ package com.drone.droneTechnology.services;
 
 import com.drone.droneTechnology.dto.DroneDTO;
 import com.drone.droneTechnology.dto.MedicationDTO;
-import com.drone.droneTechnology.entity.Drone;
 
 import java.util.List;
 
@@ -12,6 +11,8 @@ public interface IDroneService {
     void loadMedicationToDroneWithSerialNumber(String serialNumber, List<MedicationDTO> MedicationList) throws Exception;
 
     List<DroneDTO> getAvailableDrones();
+
+    List<DroneDTO> getAllDrones();
 
     String getBatteryLevel(String serialNumber);
 

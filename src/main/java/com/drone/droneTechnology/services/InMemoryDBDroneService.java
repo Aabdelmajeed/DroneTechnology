@@ -7,13 +7,10 @@ import com.drone.droneTechnology.entity.Medication;
 import com.drone.droneTechnology.enums.DroneState;
 import com.drone.droneTechnology.repo.DroneRepo;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.asm.Advice;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +49,13 @@ public class InMemoryDBDroneService implements IDroneService {
     }
 
     @Override
+    public List<DroneDTO> getAllDrones() {
+        List<Drone> drones = new ArrayList<>();
+        droneRepo.findAll().forEach(drones::add);
+        return mapDroneListToDTOList(drones);
+    }
+
+    @Override
     public String getBatteryLevel(String serialNumber) {
         Drone drone = droneRepo.findBySerialNumber(serialNumber);
         return drone.getBatteryCapacity();
@@ -75,13 +79,13 @@ public class InMemoryDBDroneService implements IDroneService {
 
 
     private boolean isDroneAvalible(Drone drone) {
-        return (DroneState.IDLE == drone.getState())  || (DroneState.LOADING == drone.getState() && Double.parseDouble(drone.getBatteryCapacity()) > 25);
+        return (DroneState.IDLE == drone.getState()) || (DroneState.LOADING == drone.getState() && Double.parseDouble(drone.getBatteryCapacity()) > 25);
     }
 
     private List<Medication> mapMedicationDtoToMedicationList(List<MedicationDTO> medicationDTOList, Drone drone) {
         return medicationDTOList.stream()
                 .map(MedicationDTO -> {
-                    Medication medication =  modelMapper().map(MedicationDTO , Medication.class);
+                    Medication medication = modelMapper().map(MedicationDTO, Medication.class);
                     medication.setDrone(drone);
                     return medication;
                 }).collect(Collectors.toList());
@@ -89,18 +93,18 @@ public class InMemoryDBDroneService implements IDroneService {
 
     private List<MedicationDTO> mapMedicationListToMedicationDTO(List<Medication> medicationList) {
         return medicationList.stream()
-                .map(medication -> modelMapper().map(medication , MedicationDTO.class))
+                .map(medication -> modelMapper().map(medication, MedicationDTO.class))
                 .collect(Collectors.toList());
     }
 
     private Drone mapDtoToDroneEntity(DroneDTO droneDTO) {
-        return modelMapper().map(droneDTO , Drone.class);
+        return modelMapper().map(droneDTO, Drone.class);
     }
 
     private List<DroneDTO> mapDroneListToDTOList(List<Drone> droneList) {
         return droneList.stream()
-                .map(drone -> modelMapper().map(drone , DroneDTO.class))
-                 .collect(Collectors.toList());
+                .map(drone -> modelMapper().map(drone, DroneDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Bean

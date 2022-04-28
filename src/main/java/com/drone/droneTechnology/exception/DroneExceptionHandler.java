@@ -35,16 +35,14 @@ public class DroneExceptionHandler {
             final String message = fieldError.getDefaultMessage();
 
             final ErrorRepresentation customFieldError = ErrorRepresentation.builder()
-                                                     .reason(message)
-                                                     .status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                    .reason(message)
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
             customFieldErrors.add(customFieldError);
         }
 
         return new ResponseEntity<List<ErrorRepresentation>>(customFieldErrors, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 
 
     @ExceptionHandler(Exception.class)

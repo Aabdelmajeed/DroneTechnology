@@ -9,6 +9,7 @@
     - what's used in project and how it facilities our development.
     - High level design of database and Entity Releationship between our tables.
     - API Endpoints what's the meaning and how to use it.
+    - Regarding Schedule task for checking battery levels for drones.
 
 ### **How to run project Locally**
 ---
@@ -108,3 +109,14 @@
       - in order to load a medication drone must be available (IDLE / Loading) state and has the ability to load these weight of medications.
      
      
+### **Regarding Schedule task for checking battery levels for drones.**
+---
+     - scheduale task is done to check the battery sizes for the drones and log it in a file as shown below.
+     - it will log all drones serial number and their battery level in that convension `[serialNumber:batteryLevel]`.
+     - task period is 5 sec I also make it configurable in application.porperties
+
+<p align="center">
+   <img src="https://user-images.githubusercontent.com/88937645/165651672-92fdbbf8-39f9-4725-a296-5fbc022000b3.PNG"> 
+ <p>
+     
+  
